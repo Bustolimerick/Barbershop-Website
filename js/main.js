@@ -11,6 +11,59 @@ const ctaBtn = document.getElementById("ctaBtn");
 const callBtn = document.getElementById("callBtn");
 const phoneLink = document.getElementById("phoneLink");
 const heading = document.getElementById("heroHeading");
+const featureGrid = document.getElementById("featureGrid")
+
+// ---- Services Data (Array of Objects) ----
+const services = [
+  {
+    title: "Classic Haircut",
+    text: "Timless cuts with modern precision tailored to your style.",
+    image: "assets/images/feature-1.jpg"
+  },
+  {
+    title: "Beard Trim",
+    text: "Shape and line up your beard for a clean, sharp look.",
+    image:"assets/images/feature-2.jpg"
+  },
+  {
+    title: "Straight Razor Shave",
+    text: "Hot towel treatment with a smooth traditional shave.",
+    image: "assets/images/feature-3.jpg"
+  }
+];
+
+// ---- Render Feature Grid using forEach ----
+// const renderFeatures = () => {
+//   if(!featureGrid) return;
+
+//   services.forEach(service => {
+//     const card = document.createElement("article");
+//     card.classList.add("feature-card");
+
+//     card.innerHTML = `
+//     <img src="${service.image}" alt="${service.title}" class="feature-img"/>
+//     <h3 class="feature-title">${service.title}</h3>
+//     <p class="feature-text">${service.text}</p>
+//     `;
+
+//     featureGrid.appendChild(card);
+//   })
+// };
+
+// Render Features using map()  and join()
+const renderFeaturesMAP = () => {
+  const cardsHTML = services.map(service => {
+    return `
+    <article class="feature-card">
+    <img src="${service.image}" alt="${service.title}" class="feature-img"/>
+    <h3 class="feature-title">${service.title}</h3>
+    <p class="feature-text">${service.text}</p>
+    </article>
+    `;
+  }).join("");
+
+  featureGrid.innerHTML = cardsHTML;
+};
 
 // ----- Helpers / Functions -----
 // Update footer year automatically
@@ -46,8 +99,9 @@ const updateHeadingText = (newText) => {
 };
 
 // ----- Event Listeners -----
-// 1) Set year on page load
+// 1) Set Year and Render Features
 setCurrentYear();
+renderFeaturesMAP();
 
 // 2) Hamburger menu toggle
 if (menuBtn) {
@@ -64,6 +118,7 @@ if (mobileMenu) {
       closeMobileMenu();
     }
   });
+
 }
 
 // 4) CTA Button: “Book Now” (placeholder behavior)
