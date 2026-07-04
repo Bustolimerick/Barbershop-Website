@@ -12,6 +12,8 @@ const callBtn = document.getElementById("callBtn");
 const phoneLink = document.getElementById("phoneLink");
 const heading = document.getElementById("heroHeading");
 const featureGrid = document.getElementById("featureGrid")
+const nav = document.getElementById("nav");
+const siteHeader = document.querySelector(".site-header")
 
 // ---- Services Data (Array of Objects) ----
 const services = [
@@ -31,6 +33,44 @@ const services = [
     image: "assets/images/feature-3.jpg"
   }
 ];
+
+// ---- Nav Array ----
+const navLinks = [
+  {Label:"Home", href:"#hero"},
+  {Label: "Services", href:"#features"},
+  {Label: "Book", href: "#cta"},
+  {Label: "Contact", href: "#footer"}
+];
+
+// ---- Render Navigation using map()
+const renderNavigation = () => {
+  //Desktop Nav
+  if (nav) {
+    const navHTML = navLinks.map(link => {
+      return `
+        <a href="${link.href}" class="nav-link">
+        ${link.Label}
+        </a>
+      `;
+
+    }).join("");
+
+    nav.innerHTML = navHTML;
+  }
+
+
+if (mobileMenu) {
+  const mobileHTML = navLinks.map(link => {
+    return `
+      <a href="${link.href}" class="mobile-link">
+        ${link.Label}
+      </a>
+    `;
+    }).join("");
+
+    mobileMenu.innerHTML = mobileHTML;
+  }
+}
 
 // ---- Render Feature Grid using forEach ----
 // const renderFeatures = () => {
@@ -72,6 +112,16 @@ const setCurrentYear = () => {
   yearEl.textContent = now.getFullYear();
 };
 
+const handleHeaderOnScroll = () => {
+  if(!siteHeader) return;
+
+  if(window.scrollY > 10) {
+    siteHeader.classList.add("is-scrolled")
+  } else {
+    siteHeader.classList.remove("is-scrolled")
+  }
+};
+
 // Toggle mobile menu open/close
 let isMenuOpen = false;
 const toggleMobileMenu = () => {
@@ -102,6 +152,10 @@ const updateHeadingText = (newText) => {
 // 1) Set Year and Render Features
 setCurrentYear();
 renderFeaturesMAP();
+toggleMobileMenu();
+renderNavigation();
+handleHeaderOnScroll(); //Run once on page loadin case user refreshes
+window.addEventListener("scroll", handleHeaderOnScroll);
 
 // 2) Hamburger menu toggle
 if (menuBtn) {
